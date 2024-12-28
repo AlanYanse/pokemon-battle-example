@@ -35,6 +35,10 @@ class Pokemon:
 pikachu = Pokemon("Pikachu", 19, 5)
 eevee = Pokemon("Eevee", 20, 5)
 
+# Cargar imagen del NPC portrait
+npc_portrait = pygame.image.load("portraits/sra-zafiro-d.png")  # Asegúrate de que esta imagen exista
+npc_portrait = pygame.transform.scale(npc_portrait, (250, 250))  # Escala la imagen a 100x100
+
 # Función para dibujar texto
 def draw_text(text, x, y, color=BLACK):
     text_surface = font.render(text, True, color)
@@ -57,16 +61,25 @@ while running:
 
     # Dibujar la interfaz de combate
     pygame.draw.rect(screen, GRAY, (50, 300, 540, 150))  # Caja de texto
-    draw_text(f"{pikachu.name} - HP: {pikachu.current_hp}/{pikachu.max_hp}", 50, 50)
-    draw_text(f"{eevee.name} - HP: {eevee.current_hp}/{eevee.max_hp}", 350, 50)
+
+    # Dibujar el retrato del NPC
+    screen.blit(npc_portrait, (50, 50))  # Posición del retrato en la pantalla
+
+    # Dibujar otros textos
+    draw_text(f"{pikachu.name} - HP: {pikachu.current_hp}/{pikachu.max_hp}", 50, 10)
+    draw_text(f"{eevee.name} - HP: {eevee.current_hp}/{eevee.max_hp}", 350, 170)
 
     # Opciones de combate
-    draw_text("Elegir la opción :", 60, 320)
-    draw_text("1. Fight  2. Run", 60, 360)
+    draw_text("Elegir una opción :", 60, 320)
+    draw_text("1> Resolver  2> Escapar", 60, 360)
+
+    # Posicion del log
+    log_pos_x = 60
+    log_pos_y = 400
 
     # Dibujar registros de batalla
     for i, log in enumerate(battle_log[-3:]):  # Solo muestra los últimos 3 mensajes
-        draw_text(log, 60, 360 + i * 20)
+        draw_text(log, log_pos_x, log_pos_y + i * 20)
 
     # Manejo de eventos
     for event in pygame.event.get():
