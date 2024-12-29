@@ -14,8 +14,16 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY = (200, 200, 200)
 
+# **Fuente personalizada**
+# Reemplaza 'my_font.ttf' con la ruta de tu archivo de fuente
+try:
+    font = pygame.font.Font("Font/Perfect DOS VGA 437 Win.ttf", 24)  # Cambia el tamaño a lo que prefieras
+except FileNotFoundError:
+    print("Fuente personalizada no encontrada. Usando fuente predeterminada.")
+    font = pygame.font.Font(None, 32)  # Usa la fuente predeterminada de Pygame
+
 # Fuentes
-font = pygame.font.Font(None, 32)
+#font = pygame.font.Font(None, 32)
 
 # Clase para un Pokémon
 class Pokemon:
