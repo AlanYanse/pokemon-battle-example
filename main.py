@@ -33,19 +33,43 @@ class Pokemon:
         self.current_hp = hp
         self.level = level
 
+    # Modifica el HP según el damage
     def take_damage(self, damage):
         self.current_hp = max(0, self.current_hp - damage)
 
+    # Devuelve True si el HP del NPC es menor o igual a 0
     def is_fainted(self):
         return self.current_hp <= 0
+
+
+class NPC:
+    def __init__(self, name, hp, path_portrait, personality):
+        self.name = name
+        self.max_hp = hp
+        self.current_hp = hp
+        self.portrait = pygame.image.load(path_portrait)
+        self.portrait = npc_portrait = pygame.transform.scale(self.portrait, (250, 250))  # Escala la imagen a 250x250
+        self.personality = personality
+
+    # Modifica el HP según el damage
+    def take_damage(self, damage):
+        self.current_hp = max(0, self.current_hp - damage)
+
+    # Devuelve True si el HP del NPC es menor o igual a 0
+    def is_fainted(self):
+        return self.current_hp <= 0
+
 
 # Inicializa Pokémon
 pikachu = Pokemon("Pikachu", 19, 5)
 eevee = Pokemon("Eevee", 20, 5)
 
+# Inicializa NPC
+sra_zafiro = NPC("Sra Zafiro", 10, "portraits/sra-zafiro-d.png", "Hostil")
+
 # Cargar imagen del NPC portrait
-npc_portrait = pygame.image.load("portraits/sra-zafiro-d.png")  # Asegúrate de que esta imagen exista
-npc_portrait = pygame.transform.scale(npc_portrait, (250, 250))  # Escala la imagen a 100x100
+#npc_portrait = pygame.image.load("portraits/sra-zafiro-d.png")  # Asegúrate de que esta imagen exista
+#npc_portrait = pygame.transform.scale(npc_portrait, (250, 250))  # Escala la imagen a 100x100
 
 # Función para dibujar texto
 def draw_text(text, x, y, color=BLACK):
@@ -71,11 +95,12 @@ while running:
     pygame.draw.rect(screen, GRAY, (50, 300, 540, 150))  # Caja de texto
 
     # Dibujar el retrato del NPC
-    screen.blit(npc_portrait, (50, 50))  # Posición del retrato en la pantalla
+    screen.blit(sra_zafiro.portrait, (50, 50))  # Posición del retrato en la pantalla
 
     # Dibujar otros textos
-    draw_text(f"{pikachu.name} - HP: {pikachu.current_hp}/{pikachu.max_hp}", 50, 10)
-    draw_text(f"{eevee.name} - HP: {eevee.current_hp}/{eevee.max_hp}", 350, 170)
+    draw_text(f"{sra_zafiro.name} - HP: {sra_zafiro.current_hp}/{sra_zafiro.max_hp}", 50, 10)
+    #draw_text(f"{eevee.name} - HP: {eevee.current_hp}/{eevee.max_hp}", 350, 170)
+    draw_text(f"{sra_zafiro.name} dice: ", 330, 50)
 
     # Opciones de combate
     draw_text("Elegir una opción :", 60, 320)
@@ -97,7 +122,7 @@ while running:
         if event.type == pygame.KEYDOWN:
             if turn == "player":
                 if event.key == pygame.K_1:  # Lucha
-                    log = battle_turn(pikachu, eevee)
+                    log = battle_turn(sra_zafiro, eevee)
                     battle_log.append(log)
                     turn = "enemy"
 
