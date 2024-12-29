@@ -25,8 +25,8 @@ except FileNotFoundError:
 # Fuentes
 #font = pygame.font.Font(None, 32)
 
-# Clase para un Pokémon
-class Pokemon:
+# Clase para un Player
+class Player:
     def __init__(self, name, hp, level):
         self.name = name
         self.max_hp = hp
@@ -41,7 +41,7 @@ class Pokemon:
     def is_fainted(self):
         return self.current_hp <= 0
 
-
+# Clase para un NPC
 class NPC:
     def __init__(self, name, hp, path_portrait, personality):
         self.name = name
@@ -59,12 +59,10 @@ class NPC:
     def is_fainted(self):
         return self.current_hp <= 0
 
+# Instancia player
+player = Player("player", 20, "trainer")
 
-# Inicializa Pokémon
-pikachu = Pokemon("Pikachu", 19, 5)
-eevee = Pokemon("Eevee", 20, 5)
-
-# Inicializa NPC
+# Instancia NPC
 sra_zafiro = NPC("Sra Zafiro", 10, "portraits/sra-zafiro-d.png", "Hostil")
 
 # Cargar imagen del NPC portrait
@@ -122,18 +120,18 @@ while running:
         if event.type == pygame.KEYDOWN:
             if turn == "player":
                 if event.key == pygame.K_1:  # Lucha
-                    log = battle_turn(sra_zafiro, eevee)
+                    log = battle_turn(player, sra_zafiro)
                     battle_log.append(log)
                     turn = "enemy"
 
             elif turn == "enemy":
-                log = battle_turn(eevee, pikachu)
+                log = battle_turn(sra_zafiro, player)
                 battle_log.append(log)
                 turn = "player"
 
     # Verifica si alguien ha perdido
-    if pikachu.is_fainted() or eevee.is_fainted():
-        winner = "Player" if not pikachu.is_fainted() else "Enemy"
+    if sra_zafiro.is_fainted():
+        winner = "Player"
         battle_log.append(f"¡{winner} gana!")
         running = False
 
