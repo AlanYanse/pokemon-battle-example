@@ -118,14 +118,18 @@ while running:
         screen.blit(sra_zafiro.portrait, (50, 50))  # Posición del retrato en la pantalla
         draw_text(f"{sra_zafiro.name} - HP: {sra_zafiro.current_hp}/{sra_zafiro.max_hp}", 50, 10)
         draw_text(f"{sra_zafiro.name} dice: ", 330, 50)
+        draw_wrapped_text(sra_zafiro_text, 330, 90, WIDTH - 340)  # Asegurarse de que el texto se actualice aquí también.
         draw_text("Elegir una opción :", 60, 320)
         draw_text("1> Reiniciar la PC", 60, 360)
     elif menu_state == "reward_screen":
-        draw_text("¡Recompensas!", WIDTH // 2 - font.size("¡Recompensas!")[0] // 2, HEIGHT // 2 - font.size("¡Recompensas!")[1] * 3)
-        draw_text("Has ganado 100 puntos de experiencia.", WIDTH // 2 - font.size("Has ganado 100 puntos de experiencia y ahora eres Junior.")[0] // 2, HEIGHT // 2 - font.size("Has ganado 100 puntos de experiencia.")[1] * 2)
-        draw_text("Has ganado 50 monedas de oro.", WIDTH // 2 - font.size("Has ganado 1000 pe.")[0] // 2, HEIGHT // 2 - font.size("Has ganado 50 monedas de oro.")[1])
-        draw_text("Has destrabado gpupdate.", WIDTH // 2 - font.size("Has destrabado gpupdate.")[0] // 2, HEIGHT // 2)
-        draw_text("Presiona Enter para continuar.", WIDTH // 2 - font.size("Presiona Enter para continuar.")[0] // 2, HEIGHT // 2 + font.size("Presiona Enter para continuar.")[1])
+        draw_text("Bien hecho!", 60, 60)
+        draw_text("Recompensas:", 60, 100)
+        draw_text("Has ganado 100 de experiencia", 60, 140)
+        draw_text("Ahora eres un Junior", 60, 180)
+        draw_text("Has ganado 1000 pe", 60, 220)
+        draw_text("Has destrabado gpupdate", 60, 260)
+        draw_text("Presiona enter para continuar.", 120, 320)
+        draw_text("...Fin...", 60, 420)
 
     # Dibujar registros de batalla solo si no estamos en la pantalla de recompensas
     if menu_state != "reward_screen":
