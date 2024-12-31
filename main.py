@@ -97,35 +97,42 @@ def draw_wrapped_text(text, x, y, max_width, color=BLACK):
 
 # Estado del juego
 battle_log = []
-menu_state = "main_menu"  # Estados posibles: "main_menu", "resolver_menu"
+menu_state = "main_menu"  # Estados posibles: "main_menu", "resolver_menu", "reward_screen"
 turn = "player"  # Alterna entre "player" y "enemy"
+sra_zafiro_text = "Dale que me anda para la M1#rd4 la computadora!"  # Texto inicial de Sra Zafiro
 
 # Bucle principal
 running = True
 while running:
     screen.fill(WHITE)
 
-    # Dibujar el retrato del NPC
-    screen.blit(sra_zafiro.portrait, (50, 50))  # Posición del retrato en la pantalla
-
     # Dibujar los elementos según el estado del menú
     if menu_state == "main_menu":
+        screen.blit(sra_zafiro.portrait, (50, 50))  # Posición del retrato en la pantalla
         draw_text(f"{sra_zafiro.name} - HP: {sra_zafiro.current_hp}/{sra_zafiro.max_hp}", 50, 10)
         draw_text(f"{sra_zafiro.name} dice: ", 330, 50)
-        draw_wrapped_text("Dale que me anda para la M1#rd4 la computadora!", 330, 90, WIDTH - 340)
+        draw_wrapped_text(sra_zafiro_text, 330, 90, WIDTH - 340)
         draw_text("Elegir una opción :", 60, 320)
         draw_text("1> Resolver  2> Escapar", 60, 360)
     elif menu_state == "resolver_menu":
+        screen.blit(sra_zafiro.portrait, (50, 50))  # Posición del retrato en la pantalla
         draw_text(f"{sra_zafiro.name} - HP: {sra_zafiro.current_hp}/{sra_zafiro.max_hp}", 50, 10)
         draw_text(f"{sra_zafiro.name} dice: ", 330, 50)
         draw_text("Elegir una opción :", 60, 320)
         draw_text("1> Reiniciar la PC", 60, 360)
+    elif menu_state == "reward_screen":
+        draw_text("¡Recompensas!", WIDTH // 2 - font.size("¡Recompensas!")[0] // 2, HEIGHT // 2 - font.size("¡Recompensas!")[1] * 3)
+        draw_text("Has ganado 100 puntos de experiencia.", WIDTH // 2 - font.size("Has ganado 100 puntos de experiencia.")[0] // 2, HEIGHT // 2 - font.size("Has ganado 100 puntos de experiencia.")[1] * 2)
+        draw_text("Has ganado 50 monedas de oro.", WIDTH // 2 - font.size("Has ganado 50 monedas de oro.")[0] // 2, HEIGHT // 2 - font.size("Has ganado 50 monedas de oro.")[1])
+        draw_text("Has destrabado gpupdate.", WIDTH // 2 - font.size("Has destrabado gpupdate.")[0] // 2, HEIGHT // 2)
+        draw_text("Presiona Enter para continuar.", WIDTH // 2 - font.size("Presiona Enter para continuar.")[0] // 2, HEIGHT // 2 + font.size("Presiona Enter para continuar.")[1])
 
-    # Dibujar registros de batalla
-    log_pos_x = 60
-    log_pos_y = 400
-    for i, log in enumerate(battle_log[-3:]):  # Solo muestra los últimos 3 mensajes
-        draw_text(log, log_pos_x, log_pos_y + i * 20)
+    # Dibujar registros de batalla solo si no estamos en la pantalla de recompensas
+    if menu_state != "reward_screen":
+        log_pos_x = 60
+        log_pos_y = 400
+        for i, log in enumerate(battle_log[-3:]):  # Solo muestra los últimos 3 mensajes
+            draw_text(log, log_pos_x, log_pos_y + i * 20)
 
     # Manejo de eventos
     for event in pygame.event.get():
@@ -141,12 +148,14 @@ while running:
                     running = False
             elif menu_state == "resolver_menu":
                 if event.key == pygame.K_1:  # Reiniciar la PC
-                    battle_log.append("Reiniciar la PC fué efectivo...")
-                elif event.key == pygame.K_2:  # Negociar
-                    battle_log.append("Intentas negociar con el NPC...")
-                elif event.key == pygame.K_3:  # Atacar
-                    battle_log.append("Decides atacar al NPC...")
-                    menu_state = "main_menu"  # Regresa al menú principal
+                    battle_log.append("Reiniciar la PC fue efectivo...")
+                    sra_zafiro.take_damage(10)
+                    sra_zafiro_text = "chau"  # Actualiza el texto de Sra Zafiro
+                elif event.key == pygame.K_RETURN and sra_zafiro_text == "chau":  # Presionar Enter después de "chau"
+                    menu_state = "reward_screen"
+            elif menu_state == "reward_screen":
+                if event.key == pygame.K_RETURN:  # Presionar Enter en la pantalla de recompensas
+                    running = False  # O puedes cambiar a otro estado o acción
 
     pygame.display.flip()
 
