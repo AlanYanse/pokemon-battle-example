@@ -122,8 +122,8 @@ while running:
         draw_text("1> Reiniciar la PC", 60, 360)
     elif menu_state == "reward_screen":
         draw_text("¡Recompensas!", WIDTH // 2 - font.size("¡Recompensas!")[0] // 2, HEIGHT // 2 - font.size("¡Recompensas!")[1] * 3)
-        draw_text("Has ganado 100 puntos de experiencia.", WIDTH // 2 - font.size("Has ganado 100 puntos de experiencia.")[0] // 2, HEIGHT // 2 - font.size("Has ganado 100 puntos de experiencia.")[1] * 2)
-        draw_text("Has ganado 50 monedas de oro.", WIDTH // 2 - font.size("Has ganado 50 monedas de oro.")[0] // 2, HEIGHT // 2 - font.size("Has ganado 50 monedas de oro.")[1])
+        draw_text("Has ganado 100 puntos de experiencia.", WIDTH // 2 - font.size("Has ganado 100 puntos de experiencia y ahora eres Junior.")[0] // 2, HEIGHT // 2 - font.size("Has ganado 100 puntos de experiencia.")[1] * 2)
+        draw_text("Has ganado 50 monedas de oro.", WIDTH // 2 - font.size("Has ganado 1000 pe.")[0] // 2, HEIGHT // 2 - font.size("Has ganado 50 monedas de oro.")[1])
         draw_text("Has destrabado gpupdate.", WIDTH // 2 - font.size("Has destrabado gpupdate.")[0] // 2, HEIGHT // 2)
         draw_text("Presiona Enter para continuar.", WIDTH // 2 - font.size("Presiona Enter para continuar.")[0] // 2, HEIGHT // 2 + font.size("Presiona Enter para continuar.")[1])
 
