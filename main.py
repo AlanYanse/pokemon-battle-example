@@ -13,6 +13,7 @@ pygame.display.set_caption("Sistema de Combate RPG")
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY = (200, 200, 200)
+BLUE = (0, 0, 255)
 
 # Fuente personalizada
 try:
@@ -62,20 +63,29 @@ sra_zafiro = NPC("Sra Zafiro", 10, "portraits/sra-zafiro-d.png", "Hostil")
 menu_options = ["Resolver", "Escapar"]
 selected_option = 0  # Índice de la opción seleccionada
 
-# Función para dibujar el menú con opciones
-def draw_menu(options, selected_index, x, y, color=BLACK, selected_color=GRAY):
+# Función para dibujar el menú con opciones resaltadas
+def draw_menu(options, selected_index, x, y, color=BLACK, selected_color=WHITE, rect_color=BLUE):
     """
-    Dibuja un menú con opciones y resalta la opción seleccionada.
+    Dibuja un menú con opciones y resalta la opción seleccionada con un rectángulo.
     :param options: Lista de opciones.
     :param selected_index: Índice de la opción seleccionada.
     :param x: Posición x del menú.
     :param y: Posición y del menú.
-    :param color: Color para las opciones no seleccionadas.
-    :param selected_color: Color para la opción seleccionada.
+    :param color: Color del texto no seleccionado.
+    :param selected_color: Color del texto seleccionado.
+    :param rect_color: Color del rectángulo de selección.
     """
     for i, option in enumerate(options):
-        option_color = selected_color if i == selected_index else color
-        draw_text(f"> {option}" if i == selected_index else option, x, y + i * 40, option_color)
+        option_text = f"> {option}" if i == selected_index else option
+        text_surface = font.render(option_text, True, selected_color if i == selected_index else color)
+        text_width, text_height = text_surface.get_size()
+
+        # Dibuja el rectángulo si es la opción seleccionada
+        if i == selected_index:
+            pygame.draw.rect(screen, rect_color, (x - 10, y + i * 40 - 5, text_width + 20, text_height + 10))
+
+        # Dibuja el texto
+        screen.blit(text_surface, (x, y + i * 40))
 
 
 # Función para dibujar texto
