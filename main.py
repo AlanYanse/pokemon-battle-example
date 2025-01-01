@@ -155,6 +155,7 @@ while running:
                     battle_log.append("Reiniciar la PC fue efectivo...")
                     sra_zafiro.take_damage(10)
                     sra_zafiro_text = "chau"  # Actualiza el texto de Sra Zafiro
+                    battle_log.append("Presiona enter para continuar...")
                 elif event.key == pygame.K_RETURN and sra_zafiro_text == "chau":  # Presionar Enter después de "chau"
                     menu_state = "reward_screen"
             elif menu_state == "reward_screen":
