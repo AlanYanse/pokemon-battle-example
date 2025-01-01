@@ -57,6 +57,27 @@ player = Player("player", 20, "trainer")
 # Instancia NPC
 sra_zafiro = NPC("Sra Zafiro", 10, "portraits/sra-zafiro-d.png", "Hostil")
 
+
+# Opciones del menú
+menu_options = ["Resolver", "Escapar"]
+selected_option = 0  # Índice de la opción seleccionada
+
+# Función para dibujar el menú con opciones
+def draw_menu(options, selected_index, x, y, color=BLACK, selected_color=GRAY):
+    """
+    Dibuja un menú con opciones y resalta la opción seleccionada.
+    :param options: Lista de opciones.
+    :param selected_index: Índice de la opción seleccionada.
+    :param x: Posición x del menú.
+    :param y: Posición y del menú.
+    :param color: Color para las opciones no seleccionadas.
+    :param selected_color: Color para la opción seleccionada.
+    """
+    for i, option in enumerate(options):
+        option_color = selected_color if i == selected_index else color
+        draw_text(f"> {option}" if i == selected_index else option, x, y + i * 40, option_color)
+
+
 # Función para dibujar texto
 def draw_text(text, x, y, color=BLACK):
     text_surface = font.render(text, True, color)
@@ -113,7 +134,8 @@ while running:
         draw_text(f"{sra_zafiro.name} dice: ", 330, 50)
         draw_wrapped_text(sra_zafiro_text, 330, 90, WIDTH - 340)
         draw_text("Elegir una opción :", 60, 320)
-        draw_text("1> Resolver  2> Escapar", 60, 360)
+        #draw_text("1> Resolver  2> Escapar", 60, 360)
+        draw_menu(menu_options, selected_option, 60, 360)  # Dibuja el menú con opciones
     elif menu_state == "resolver_menu":
         screen.blit(sra_zafiro.portrait, (50, 50))  # Posición del retrato en la pantalla
         draw_text(f"{sra_zafiro.name} - HP: {sra_zafiro.current_hp}/{sra_zafiro.max_hp}", 50, 10)
@@ -139,17 +161,23 @@ while running:
             draw_text(log, log_pos_x, log_pos_y + i * 20)
 
     # Manejo de eventos
+    # Eventos
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
         if event.type == pygame.KEYDOWN:
             if menu_state == "main_menu":
-                if event.key == pygame.K_1:  # Resolver
-                    menu_state = "resolver_menu"
-                elif event.key == pygame.K_2:  # Escapar
-                    battle_log.append("¡Has escapado!")
-                    running = False
+                if event.key == pygame.K_UP:
+                    selected_option = (selected_option - 1) % len(menu_options)  # Mover hacia arriba
+                elif event.key == pygame.K_DOWN:
+                    selected_option = (selected_option + 1) % len(menu_options)  # Mover hacia abajo
+                elif event.key == pygame.K_RETURN:  # Seleccionar opción
+                    if selected_option == 0:  # Resolver
+                        menu_state = "resolver_menu"
+                    elif selected_option == 1:  # Escapar
+                        battle_log.append("¡Has escapado!")
+                        running = False
             elif menu_state == "resolver_menu":
                 if event.key == pygame.K_1:  # Reiniciar la PC
                     battle_log.append("Reiniciar la PC fue efectivo...")
