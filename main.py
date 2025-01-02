@@ -147,12 +147,14 @@ while running:
         #draw_text("1> Resolver  2> Escapar", 60, 360)
         draw_menu(menu_options, selected_option, 60, 360)  # Dibuja el menú con opciones
     elif menu_state == "resolver_menu":
+        menu_options = ["Reiniciar la PC"]
         screen.blit(sra_zafiro.portrait, (50, 50))  # Posición del retrato en la pantalla
         draw_text(f"{sra_zafiro.name} - HP: {sra_zafiro.current_hp}/{sra_zafiro.max_hp}", 50, 10)
         draw_text(f"{sra_zafiro.name} dice: ", 330, 50)
         draw_wrapped_text(sra_zafiro_text, 330, 90, WIDTH - 340)  # Asegurarse de que el texto se actualice aquí también.
         draw_text("Elegir una opción :", 60, 320)
-        draw_text("1> Reiniciar la PC", 60, 360)
+        #draw_text("1> Reiniciar la PC", 60, 360)
+        draw_menu(menu_options, selected_option, 60, 360)  # Dibuja el menú con opciones
     elif menu_state == "reward_screen":
         draw_text("Bien hecho!", 60, 60)
         draw_text("Recompensas:", 60, 100)
@@ -189,7 +191,7 @@ while running:
                         battle_log.append("¡Has escapado!")
                         running = False
             elif menu_state == "resolver_menu":
-                if event.key == pygame.K_1:  # Reiniciar la PC
+                if event.key == pygame.K_RETURN and sra_zafiro_text != "chau":  # Reiniciar la PC
                     battle_log.append("Reiniciar la PC fue efectivo...")
                     sra_zafiro.take_damage(10)
                     sra_zafiro_text = "chau"  # Actualiza el texto de Sra Zafiro
