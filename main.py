@@ -5,7 +5,7 @@ import sys
 pygame.init()
 
 # Tamaño de la ventana
-WIDTH, HEIGHT = 640, 480
+WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Sistema de Combate RPG")
 
@@ -43,7 +43,7 @@ class NPC:
         self.max_hp = hp
         self.current_hp = hp
         self.portrait = pygame.image.load(path_portrait)
-        self.portrait = pygame.transform.scale(self.portrait, (250, 250))  # Escala la imagen a 250x250
+        self.portrait = pygame.transform.scale(self.portrait, (350, 350))  # Escala la imagen a 350x350
         self.personality = personality
 
     def take_damage(self, damage):
@@ -141,20 +141,20 @@ while running:
     if menu_state == "main_menu":
         screen.blit(sra_zafiro.portrait, (50, 50))  # Posición del retrato en la pantalla
         draw_text(f"{sra_zafiro.name} - HP: {sra_zafiro.current_hp}/{sra_zafiro.max_hp}", 50, 10)
-        draw_text(f"{sra_zafiro.name} dice: ", 330, 50)
-        draw_wrapped_text(sra_zafiro_text, 330, 90, WIDTH - 340)
-        draw_text("Elegir una opción :", 60, 320)
+        draw_text(f"{sra_zafiro.name} dice: ", 430, 50)
+        draw_wrapped_text(sra_zafiro_text, 430, 90, WIDTH - 440)
+        draw_text("Elegir una opción :", 60, 420)
         #draw_text("1> Resolver  2> Escapar", 60, 360)
-        draw_menu(menu_options, selected_option, 60, 360)  # Dibuja el menú con opciones
+        draw_menu(menu_options, selected_option, 60, 460)  # Dibuja el menú con opciones
     elif menu_state == "resolver_menu":
         menu_options = ["Reiniciar la PC"]
         screen.blit(sra_zafiro.portrait, (50, 50))  # Posición del retrato en la pantalla
         draw_text(f"{sra_zafiro.name} - HP: {sra_zafiro.current_hp}/{sra_zafiro.max_hp}", 50, 10)
-        draw_text(f"{sra_zafiro.name} dice: ", 330, 50)
-        draw_wrapped_text(sra_zafiro_text, 330, 90, WIDTH - 340)  # Asegurarse de que el texto se actualice aquí también.
-        draw_text("Elegir una opción :", 60, 320)
+        draw_text(f"{sra_zafiro.name} dice: ", 430, 50)
+        draw_wrapped_text(sra_zafiro_text, 430, 90, WIDTH - 440)  # Asegurarse de que el texto se actualice aquí también.
+        draw_text("Elegir una opción :", 60, 420)
         #draw_text("1> Reiniciar la PC", 60, 360)
-        draw_menu(menu_options, selected_option, 60, 360)  # Dibuja el menú con opciones
+        draw_menu(menu_options, selected_option, 60, 460)  # Dibuja el menú con opciones
     elif menu_state == "reward_screen":
         draw_text("Bien hecho!", 60, 60)
         draw_text("Recompensas:", 60, 100)
@@ -168,7 +168,7 @@ while running:
     # Dibujar registros de batalla solo si no estamos en la pantalla de recompensas
     if menu_state != "reward_screen":
         log_pos_x = 60
-        log_pos_y = 400
+        log_pos_y = 500
         for i, log in enumerate(battle_log[-3:]):  # Solo muestra los últimos 3 mensajes
             draw_text(log, log_pos_x, log_pos_y + i * 20)
 
