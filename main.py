@@ -4,6 +4,15 @@ import sys
 # Inicializa Pygame
 pygame.init()
 
+# Configuración de la música de fondo
+pygame.mixer.init()  # Inicializa el módulo de audio
+try:
+    pygame.mixer.music.load("Sound/distancia-para-un-duelo.mp3")  # Reemplaza con la ruta de tu archivo .mp3
+    pygame.mixer.music.set_volume(0.5)  # Ajusta el volumen (0.0 a 1.0)
+    pygame.mixer.music.play(-1)  # Reproduce la música en bucle infinito
+except pygame.error as e:
+    print(f"No se pudo cargar la música de fondo: {e}")
+
 # Tamaño de la ventana
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -136,6 +145,11 @@ sra_zafiro_text = "Dale que me anda para la M1#rd4 la computadora!"  # Texto ini
 running = True
 while running:
     screen.fill(WHITE)
+
+    # Detener o reproducir música según el estado del menú
+    if menu_state == "reward_screen":
+        if pygame.mixer.music.get_busy():  # Si la música está sonando
+            pygame.mixer.music.pause()  # Pausa la música
 
     # Dibujar los elementos según el estado del menú
     if menu_state == "main_menu":
