@@ -16,7 +16,7 @@ except pygame.error as e:
 # Tamaño de la ventana
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Sistema de Combate RPG")
+pygame.display.set_caption("Soportando-IT")
 
 # Colores
 WHITE = (255, 255, 255)
